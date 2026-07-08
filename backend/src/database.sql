@@ -119,3 +119,10 @@ ALTER TABLE tickets ADD COLUMN IF NOT EXISTS created_by INTEGER REFERENCES users
 ALTER TABLE tickets ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP DEFAULT NOW();
 
 UPDATE tickets SET category = 'paid' WHERE category IS NULL;
+
+-- Newsletter subscribers (public footer "Subscribe" form)
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    subscribed_at TIMESTAMP DEFAULT NOW()
+);
