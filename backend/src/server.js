@@ -44,6 +44,8 @@ const homepageRoutes = require("./routes/homepageRoutes");
 const verifyRoutes = require("./routes/verifyRoutes");
 const reportsRoutes = require("./routes/reportsRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/events", eventsRoutes);
@@ -57,6 +59,8 @@ app.use("/api/homepage", homepageRoutes);
 app.use("/api/verify", verifyRoutes);
 app.use("/api/reports", reportsRoutes);
 app.use("/api/newsletter", newsletterRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/api/uploads", uploadRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Power of Circles API is running!", status: "success" });

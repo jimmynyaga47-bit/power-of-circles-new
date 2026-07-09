@@ -126,3 +126,15 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
     email VARCHAR(255) UNIQUE NOT NULL,
     subscribed_at TIMESTAMP DEFAULT NOW()
 );
+
+-- Contact form submissions (public Contact page)
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(50),
+    subject VARCHAR(150),
+    message TEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'new',
+    created_at TIMESTAMP DEFAULT NOW()
+);

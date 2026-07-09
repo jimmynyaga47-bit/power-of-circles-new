@@ -4,6 +4,7 @@ import axios from "axios";
 const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function HeroCMS() {
+  const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     hero_title: "",
     hero_subtitle: "",
@@ -41,6 +42,30 @@ function HeroCMS() {
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await axios.post(`${API}/uploads/image`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setForm((prev) => ({ ...prev, hero_image: res.data.url }));
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to upload image. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -112,8 +137,22 @@ function HeroCMS() {
             </div>
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Background Image URL
+                Background Image
               </label>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm mb-2 disabled:opacity-50" />
+              {uploading && (
+                <p className="text-sm text-blue-600 mb-2">Uploading image...</p>
+              )}
+
+              <p className="text-xs text-gray-500 mb-1">
+                Or paste an image URL directly:
+              </p>
               <input name="hero_image" value={form.hero_image}
                 onChange={handleChange}
                 placeholder="https://example.com/hero-image.jpg"

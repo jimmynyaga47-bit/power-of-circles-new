@@ -6,6 +6,7 @@ const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 function Home() {
   const [settings, setSettings] = useState(null);
+  const [homepage, setHomepage] = useState(null);
   const [events, setEvents] = useState([]);
   const [founders, setFounders] = useState([]);
   const [sponsors, setSponsors] = useState([]);
@@ -13,6 +14,7 @@ function Home() {
 
   useEffect(() => {
     axios.get(`${API}/cms/settings`).then((r) => setSettings(r.data)).catch(console.error);
+    axios.get(`${API}/homepage`).then((r) => setHomepage(r.data)).catch(console.error);
     axios.get(`${API}/events`).then((r) => setEvents(r.data.events?.slice(0, 3) || [])).catch(console.error);
     axios.get(`${API}/cms/founders`).then((r) => setFounders(r.data)).catch(console.error);
     axios.get(`${API}/cms/sponsors`).then((r) => setSponsors(r.data)).catch(console.error);
@@ -47,7 +49,7 @@ function Home() {
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-55" />
+        <div className="absolute inset-0 bg-black/55" />
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-32">
           <span className="inline-flex items-center gap-2 border border-blue-400 text-blue-300 text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-widest mb-6">
             CONNECT • NETWORK • GROW
@@ -84,6 +86,20 @@ function Home() {
           ))}
         </div>
       </section>
+
+      {/* ── WELCOME (managed from Content Management → Homepage) ── */}
+      {(homepage?.welcome_title || homepage?.welcome_message) && (
+        <section className="py-16 bg-white text-center">
+          <div className="max-w-3xl mx-auto px-6">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {homepage?.welcome_title || "Welcome to Power Of Circles"}
+            </h2>
+            <p className="text-gray-600 leading-relaxed">
+              {homepage?.welcome_message}
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* ── ABOUT + UPCOMING EVENTS ── */}
       <section className="py-20 bg-gray-50">

@@ -23,9 +23,15 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1000));
-    setSent(true);
-    setLoading(false);
+    try {
+      await axios.post(`${API}/contact`, form);
+      setSent(true);
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Failed to send message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactItems = [
