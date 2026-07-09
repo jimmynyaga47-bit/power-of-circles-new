@@ -73,7 +73,7 @@ function Footer() {
           <ul className="space-y-3 text-gray-400 text-sm">
             <li>📍 {settings?.contact_address || "Nairobi, Kenya"}</li>
             <li>📞 {settings?.contact_phone || "+254 700 123 456"}</li>
-            <li>✉️ {settings?.contact_email || "info@powerofcirclesinnetworking.com"}</li>
+            <li>✉️ {settings?.contact_email || "info@powerofcirclesafrika.com"}</li>
           </ul>
         </div>
         <div>

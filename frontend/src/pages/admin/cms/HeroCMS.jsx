@@ -198,7 +198,7 @@ function HeroCMS() {
               <label className="block text-sm font-semibold text-gray-700 mb-1">Email</label>
               <input name="contact_email" value={form.contact_email}
                 onChange={handleChange}
-                placeholder="info@powerofcirclesinnetworking.com"
+                placeholder="info@powerofcirclesafrika.com"
                 className="w-full border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
             <div>

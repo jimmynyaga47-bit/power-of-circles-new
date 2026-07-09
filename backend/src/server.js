@@ -7,13 +7,32 @@ require("./config/db");
 
 const app = express();
 
+// Default known origins (local dev + the real production domain).
+// Add any staging/preview URLs (e.g. your Render/Vercel subdomain) via the
+// ALLOWED_ORIGINS env var as a comma-separated list — no code change needed.
+const defaultOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://powerofcirclesafrika.com",
+  "https://www.powerofcirclesafrika.com",
+];
+
+const envOrigins = (process.env.ALLOWED_ORIGINS || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "https://powerofcirclesinnetworking.com",
-    "https://www.powerofcirclesinnetworking.com",
-  ],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, server-to-server)
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    console.warn(`Blocked by CORS: ${origin}`);
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true,
 }));
 

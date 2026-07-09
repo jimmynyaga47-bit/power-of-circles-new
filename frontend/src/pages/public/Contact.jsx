@@ -37,8 +37,8 @@ function Contact() {
   const contactItems = [
     { icon: "📍", label: "Address", value: settings?.contact_address || "Nairobi, Kenya" },
     { icon: "📞", label: "Phone", value: settings?.contact_phone || "+254 700 123 456" },
-    { icon: "✉️", label: "Email", value: settings?.contact_email || "info@powerofcirclesinnetworking.com" },
-    { icon: "🌐", label: "Website", value: "www.powerofcirclesinnetworking.com" },
+    { icon: "✉️", label: "Email", value: settings?.contact_email || "info@powerofcirclesafrika.com" },
+    { icon: "🌐", label: "Website", value: "www.powerofcirclesafrika.com" },
   ];
 
   const socialLinks = [
